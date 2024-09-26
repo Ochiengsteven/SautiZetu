@@ -1,0 +1,181 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+enum Role {
+  USER
+  MODERATOR
+  ADMIN
+}
+
+model User {
+  id           String   @id @default(uuid())
+  username     String
+  email        String?  @unique
+  passwordHash String?
+  googleId     String?  @unique
+  avatarUrl    String?
+  role         Role     @default(USER)
+  isVerified   Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relationships
+  sessions               Session[]
+  forumPosts             ForumPost[]
+  forumComments          ForumComment[]
+  whistleblowerReports   WhistleblowerReport[]
+  policeBrutalityReports PoliceBrutalityReport[]
+  crowdfunds             Crowdfund[]
+  contributions          Contribution[]
+  crowdfundSignatories   CrowdfundSignatory[]
+
+  @@map("users")
+}
+
+model Session {
+  id        String   @id
+  userId    String
+  expiresAt DateTime
+
+  user User @relation(references: [id], fields: [userId], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model Bill {
+  id           String   @id @default(uuid())
+  title        String
+  description  String
+  status       String
+  proposedDate DateTime
+  updatedAt    DateTime @updatedAt
+
+  // Relationships
+  forumPosts ForumPost[]
+
+  @@map("bills")
+}
+
+model ForumPost {
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relationships
+  author   User           @relation(fields: [authorId], references: [id])
+  authorId String
+  bill     Bill?          @relation(fields: [billId], references: [id])
+  billId   String?
+  comments ForumComment[]
+
+  @@map("forum_posts")
+}
+
+model ForumComment {
+  id        String   @id @default(uuid())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relationships
+  author   User      @relation(fields: [authorId], references: [id])
+  authorId String
+  post     ForumPost @relation(fields: [postId], references: [id])
+  postId   String
+
+  @@map("forum_comments")
+}
+
+model WhistleblowerReport {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  evidence    String[] // URLs or file paths
+  status      String   @default("PENDING") // PENDING, VERIFIED, REJECTED
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relationships
+  reporter   User   @relation(fields: [reporterId], references: [id])
+  reporterId String
+
+  @@map("whistleblower_reports")
+}
+
+model PoliceBrutalityReport {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  location    String
+  date        DateTime
+  evidence    String[] // URLs or file paths
+  status      String   @default("PENDING") // PENDING, VERIFIED, REJECTED
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relationships
+  reporter   User   @relation(fields: [reporterId], references: [id])
+  reporterId String
+
+  @@map("police_brutality_reports")
+}
+
+model Crowdfund {
+  id            String   @id @default(uuid())
+  title         String
+  description   String
+  targetAmount  Float
+  currentAmount Float    @default(0)
+  status        String   @default("ACTIVE") // ACTIVE, COMPLETED, CANCELLED
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relationships
+  creator       User                 @relation(fields: [creatorId], references: [id])
+  creatorId     String
+  signatories   CrowdfundSignatory[]
+  contributions Contribution[]
+
+  @@map("crowdfunds")
+}
+
+model CrowdfundSignatory {
+  id          String    @id @default(uuid())
+  crowdfund   Crowdfund @relation(fields: [crowdfundId], references: [id])
+  crowdfundId String
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
+
+  @@unique([crowdfundId, userId])
+  @@map("crowdfund_signatories")
+}
+
+model Contribution {
+  id        String   @id @default(uuid())
+  amount    Float
+  createdAt DateTime @default(now())
+
+  // Relationships
+  contributor   User      @relation(fields: [contributorId], references: [id])
+  contributorId String
+  crowdfund     Crowdfund @relation(fields: [crowdfundId], references: [id])
+  crowdfundId   String
+
+  @@map("contributions")
+}
