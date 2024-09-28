@@ -23,7 +23,7 @@ const Navbar = () => {
     {
       key: "profile",
       label: (
-        <Link href={`/profile/${user.id}`}>
+        <Link href={`/profile/${user?.id}`}>
           <Space>
             <UserOutlined /> Profile
           </Space>
@@ -33,7 +33,7 @@ const Navbar = () => {
     {
       key: "verify",
       label: (
-        <Link href={`/verify/${user.id}`}>
+        <Link href={`/verify/${user?.id}`}>
           <Space>
             <CheckCircleOutlined /> Verify Account
           </Space>
@@ -67,7 +67,7 @@ const Navbar = () => {
                   <Space>
                     <Avatar icon={<UserOutlined />} />{" "}
                     {/* Avatar with UserOutlined icon */}
-                    <span>{user.username}</span>
+                    <span>{user?.username}</span>
                     <DownOutlined />
                   </Space>
                 </a>

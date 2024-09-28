@@ -61,6 +61,7 @@ model Bill {
   title        String
   description  String
   status       String
+  proposedBy   String
   proposedDate DateTime
   updatedAt    DateTime @updatedAt
 
