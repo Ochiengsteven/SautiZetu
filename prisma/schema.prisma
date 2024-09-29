@@ -107,7 +107,7 @@ model WhistleblowerReport {
   id          String   @id @default(uuid())
   title       String
   description String
-  evidence    String[] // URLs or file paths
+  evidence    Json[] // URLs or file paths
   status      String   @default("PENDING") // PENDING, VERIFIED, REJECTED
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
