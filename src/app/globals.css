@@ -24,3 +24,17 @@
   width: 24px;
   height: 24px;
 }
+
+/* Add this to your global CSS or a CSS module */
+.ant-btn-primary {
+  background-color: #10b981 !important; /* Tailwind's green-500 */
+}
+
+.ant-btn-primary:hover,
+.ant-btn-primary:focus {
+  background-color: #059669 !important; /* Tailwind's green-600 */
+}
+
+.ant-btn-default.text-green-500:hover {
+  color: #059669 !important; /* Tailwind's green-600 */
+}
