@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Layout, Menu } from "antd";
@@ -14,7 +14,7 @@ import {
 const { Sider } = Layout;
 
 const SideNav = () => {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   const pathname = usePathname();
 
   const menuItems = [
@@ -28,6 +28,24 @@ const SideNav = () => {
     },
     { key: "/whistleblower", icon: <AlertOutlined />, label: "Whistleblower" },
   ];
+
+  // Function to handle window resize
+  const handleResize = () => {
+    if (window.innerWidth >= 768) {
+      setCollapsed(false);
+    } else {
+      setCollapsed(true);
+    }
+  };
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <Sider

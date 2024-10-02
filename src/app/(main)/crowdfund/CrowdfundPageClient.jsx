@@ -79,21 +79,25 @@ const CrowdfundPageClient = ({ initialCrowdfunds, currentUser }) => {
             key={crowdfund.id}
             title={crowdfund.title}
             extra={
-              <div>
+              <div className="flex gap-2 text-gray-400">
                 <Button
                   icon={<UserAddOutlined />}
                   onClick={() => {
                     setSelectedCrowdfund(crowdfund);
                     setIsSignatoryModalVisible(true);
                   }}
-                />
+                >
+                  Add Signatory
+                </Button>
                 <Button
                   icon={<DollarOutlined />}
                   onClick={() => {
                     setSelectedCrowdfund(crowdfund);
                     setIsContributeModalVisible(true);
                   }}
-                />
+                >
+                  Contribute
+                </Button>
               </div>
             }
             className="w-full"
@@ -123,6 +127,8 @@ const CrowdfundPageClient = ({ initialCrowdfunds, currentUser }) => {
                   crowdfund.targetAmount?.toFixed(2) || "0.00"
                 }`
               }
+              strokeColor="#52c41a"
+              style={{ height: "28px" }}
             />
             <p>
               <strong>Top 5 Contributors:</strong>

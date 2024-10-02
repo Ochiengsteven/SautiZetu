@@ -22,9 +22,9 @@ export default async function Layout({ children }) {
     <SessionProvider value={session}>
       <div className="flex">
         <SideNav />
-        <div className="flex flex-col min-h-screen">
+        <div className="flex  flex-1 flex-col min-h-screen">
           <Navbar />
-          <main className="flex-grow max-w-screen">{children}</main>
+          <main className="flex-grow w-full">{children}</main>
         </div>
       </div>
     </SessionProvider>
