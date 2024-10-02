@@ -60,8 +60,8 @@ const WhySautiZetu = () => {
                   <Image
                     src={reason.image}
                     alt={reason.title}
-                    layout="fill"
-                    objectFit="cover"
+                    fill
+                    style={{ objectFit: "cover" }} // Use style instead of objectFit
                   />
                 </div>
               }

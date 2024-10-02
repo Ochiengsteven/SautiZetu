@@ -43,8 +43,8 @@ const HowItWorks = () => {
                     <Image
                       src={step.image}
                       alt={step.title}
-                      layout="fill"
-                      objectFit="cover"
+                      fill
+                      style={{ objectFit: "cover" }} // Use style instead of objectFit
                     />
                   </div>
                 }

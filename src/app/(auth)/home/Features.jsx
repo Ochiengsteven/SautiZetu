@@ -68,8 +68,8 @@ const Features = () => {
                     <Image
                       src={feature.image}
                       alt={feature.title}
-                      layout="fill"
-                      objectFit="cover"
+                      fill
+                      style={{ objectFit: "cover" }} // Use style instead of objectFit
                     />
                   </div>
                 }

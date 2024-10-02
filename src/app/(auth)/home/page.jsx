@@ -32,7 +32,7 @@ const page = () => {
         </p>
         <button
           onClick={handleRegister}
-          class="px-4 mt-4 py-2 bg-green-500 text-white border border-green-500 border-opacity-20 rounded-lg shadow-lg hover:bg-opacity-60 transition duration-300 ease-in-out"
+          className="px-4 mt-4 py-2 bg-green-500 text-white border border-green-500 border-opacity-20 rounded-lg shadow-lg hover:bg-opacity-60 transition duration-300 ease-in-out"
         >
           Get Involved
         </button>
