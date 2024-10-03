@@ -4,7 +4,7 @@ import { Card, Row, Col, Statistic } from "antd";
 import {
   UserOutlined,
   FileTextOutlined,
-  TeamOutlined,
+  CommentOutlined,
   FundOutlined,
 } from "@ant-design/icons";
 import {
@@ -38,41 +38,77 @@ export default function Home() {
 
         <Row gutter={[16, 16]}>
           <Col xs={24} sm={12} lg={6}>
-            <Card>
+            <Card className="bg-[#fef2d6] text-white font-semibold">
               <Statistic
                 title="Active Users"
                 value={11280}
-                prefix={<UserOutlined />}
+                prefix={
+                  <UserOutlined
+                    style={{
+                      backgroundColor: "#ff7e69",
+                      padding: "5px",
+                      borderRadius: "50%",
+                      color: "white",
+                    }}
+                  />
+                }
                 valueStyle={{ color: "#3f8600" }}
               />
             </Card>
           </Col>
           <Col xs={24} sm={12} lg={6}>
-            <Card>
+            <Card className="bg-[#d5fce3] font-semibold">
               <Statistic
                 title="Reports Filed"
                 value={9318}
-                prefix={<FileTextOutlined />}
+                prefix={
+                  <FileTextOutlined
+                    style={{
+                      backgroundColor: "#39d83d",
+                      padding: "5px",
+                      borderRadius: "50%",
+                      color: "white",
+                    }}
+                  />
+                }
                 valueStyle={{ color: "#cf1322" }}
               />
             </Card>
           </Col>
           <Col xs={24} sm={12} lg={6}>
-            <Card>
+            <Card className="bg-[#f0e0ff] font-semibold">
               <Statistic
                 title="Ongoing Discussions"
                 value={1628}
-                prefix={<TeamOutlined />}
+                prefix={
+                  <CommentOutlined
+                    style={{
+                      backgroundColor: "#b36efb",
+                      padding: "5px",
+                      borderRadius: "50%",
+                      color: "white",
+                    }}
+                  />
+                }
                 valueStyle={{ color: "#1890ff" }}
               />
             </Card>
           </Col>
           <Col xs={24} sm={12} lg={6}>
-            <Card>
+            <Card className="font-semibold bg-[#fcdade]">
               <Statistic
                 title="Funds Raised"
                 value={2938456}
-                prefix={<FundOutlined />}
+                prefix={
+                  <FundOutlined
+                    style={{
+                      backgroundColor: "#c17fff",
+                      padding: "5px",
+                      borderRadius: "50%",
+                      color: "white",
+                    }}
+                  />
+                }
                 valueStyle={{ color: "#faad14" }}
                 suffix="KSh"
               />
