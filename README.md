@@ -15,7 +15,7 @@
 
 ## Introduction
 
-SautiZetu is a groundbreaking social justice platform designed to empower Kenyan citizens and promote transparency in governance. Our name, "Sautizetu," means "Our Voice" in Swahili, embodying our mission to amplify the collective voice of the people. We provide a comprehensive suite of tools including real-time bill tracking, public forums for discussion, a secure whistleblowing system, police brutality reporting, and community-driven crowdfunding.
+SautiZetu is a groundbreaking social justice platform designed to empower Kenyan citizens and promote transparency in governance. The name, "Sautizetu," means "Our Voice" in Swahili, embodying our mission to amplify the collective voice of the people. It provides a comprehensive suite of tools including real-time parliament bills tracking, public forums for discussion, a secure whistleblowing system, police brutality reporting, and community-driven crowdfunding.
 
 ## Features
 
