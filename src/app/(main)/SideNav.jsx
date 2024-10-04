@@ -9,6 +9,7 @@ import {
   CommentOutlined,
   WarningOutlined,
   AlertOutlined,
+  HomeOutlined,
 } from "@ant-design/icons";
 
 const { Sider } = Layout;
@@ -18,6 +19,7 @@ const SideNav = () => {
   const pathname = usePathname();
 
   const menuItems = [
+    { key: "/", icon: <HomeOutlined />, label: "Home" },
     { key: "/bills", icon: <FileTextOutlined />, label: "Bills" },
     { key: "/crowdfund", icon: <TeamOutlined />, label: "Crowdfund" },
     { key: "/forums", icon: <CommentOutlined />, label: "Forums" },
