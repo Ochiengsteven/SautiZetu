@@ -1,7 +1,6 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import cloudinary from "@/lib/cloudinary";
 import { validateRequest } from "@/auth";
 
 export async function getAllWhistleblowerReports() {
@@ -9,7 +8,7 @@ export async function getAllWhistleblowerReports() {
     const reports = await prisma.whistleblowerReport.findMany({
       orderBy: { createdAt: "desc" },
       include: {
-        reporter: true, // Include reporter details
+        reporter: true,
       },
     });
     return { success: true, reports };
@@ -49,6 +48,29 @@ export async function addWhistleblowerReport(formData) {
     // Filter out any null values (non-file inputs)
     const validEvidenceData = evidenceData.filter((item) => item !== null);
 
+    // Validate file types
+    const allowedMimeTypes = [
+      "image/jpeg",
+      "image/png",
+      "image/gif",
+      "application/pdf",
+      "video/mp4",
+      "video/quicktime",
+    ];
+
+    const invalidFiles = validEvidenceData.filter(
+      (item) => !allowedMimeTypes.includes(item.mimeType)
+    );
+
+    if (invalidFiles.length > 0) {
+      return {
+        success: false,
+        error: `Invalid file type(s): ${invalidFiles
+          .map((f) => f.filename)
+          .join(", ")}. Only images, PDFs, and videos are allowed.`,
+      };
+    }
+
     const newReport = await prisma.whistleblowerReport.create({
       data: {
         title,
@@ -62,5 +84,30 @@ export async function addWhistleblowerReport(formData) {
   } catch (error) {
     console.error("Failed to add report:", error);
     return { success: false, error: "Failed to add report" };
+  }
+}
+
+export async function getEvidenceFile(reportId, fileIndex) {
+  try {
+    const report = await prisma.whistleblowerReport.findUnique({
+      where: { id: reportId },
+      select: { evidence: true },
+    });
+
+    if (!report || !report.evidence[fileIndex]) {
+      return { success: false, error: "File not found" };
+    }
+
+    const file = report.evidence[fileIndex];
+    return {
+      success: true,
+      file: {
+        ...file,
+        data: Buffer.from(file.data, "base64"),
+      },
+    };
+  } catch (error) {
+    console.error("Failed to fetch file:", error);
+    return { success: false, error: "Failed to fetch file" };
   }
 }

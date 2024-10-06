@@ -10,6 +10,7 @@ const { TextArea } = Input;
 const AddWhistleblowerForm = ({ onReportAdded }) => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const [fileList, setFileList] = useState([]);
 
   const onFinish = async (values) => {
     setLoading(true);
@@ -18,11 +19,9 @@ const AddWhistleblowerForm = ({ onReportAdded }) => {
     formData.append("description", values.description);
 
     // Handle file uploads
-    if (values.evidence && values.evidence.fileList) {
-      values.evidence.fileList.forEach((file) => {
-        formData.append("evidence", file.originFileObj);
-      });
-    }
+    fileList.forEach((file) => {
+      formData.append("evidence", file.originFileObj);
+    });
 
     const result = await addWhistleblowerReport(formData);
     setLoading(false);
@@ -30,17 +29,15 @@ const AddWhistleblowerForm = ({ onReportAdded }) => {
     if (result.success) {
       message.success("Report added successfully");
       form.resetFields();
+      setFileList([]);
       onReportAdded(result.report);
     } else {
       message.error(result.error);
     }
   };
 
-  const normFile = (e) => {
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e && e.fileList;
+  const handleFileChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
   };
 
   return (
@@ -59,10 +56,12 @@ const AddWhistleblowerForm = ({ onReportAdded }) => {
         name="evidence"
         label="Evidence"
         valuePropName="fileList"
-        getValueFromEvent={normFile}
+        getValueFromEvent={(e) => e && e.fileList}
       >
         <Upload
           listType="picture"
+          fileList={fileList}
+          onChange={handleFileChange}
           beforeUpload={() => false} // Prevent auto-upload
           multiple
         >
