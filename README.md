@@ -39,6 +39,10 @@ SautiZetu is a groundbreaking social justice platform designed to empower Kenyan
 
 You can view the live demo of the project at [SautiZetu Demo](https://sauti-zetu.vercel.app/).
 
+## Pitch Deck
+
+For a detailed overview of the project, check out our [Canva Pitch Deck](https://www.canva.com/design/DAGSnmCuK6Y/hRXQpbq2CVhJoYM84ODtTQ/edit?utm_content=DAGSnmCuK6Y&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton).
+
 ## Prerequisites
 
 Before you begin, ensure you have met the following requirements:
